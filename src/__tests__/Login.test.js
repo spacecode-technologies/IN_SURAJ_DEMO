@@ -5,7 +5,7 @@ import EnzymeAdapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { Provider } from "react-redux";
 import { findTestAttr, storefactory } from "../testUtils";
 import { Switch, BrowserRouter } from "react-router-dom";
-import moxios from "moxios";
+// import moxios from "moxios";
 import Sendlogin from "../redux/actions/action";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
@@ -51,35 +51,6 @@ describe("should element check", () => {
   });
 });
 
-describe("should mock axios",()=>{
-  const post={username:5252,password:"admin"}
-    beforeEach(()=>{
-        moxios.install();
-    })
-    afterEach(()=>{
-        moxios.uninstall();
-    })
-
-    test("secrete word retun",()=>{
-        const store=storefactory()
-        moxios.wait(()=>{
-            const request=moxios.requests.mostRecent();
-            request.respondWith({
-            status:200,
-              response:{ data:{status:true}}
-            });
-
-        });
-        return store.dispatch(Sendlogin(post))
-        .then(()=>{
-            
-            const secreateword=store.getState().Signin
-            expect(Object.values(secreateword)[1].data.data.status).toBe(true)
-            
-        })
-    })
-
-})
 
 
 
